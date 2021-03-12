@@ -9,7 +9,7 @@ sys.path.append(os.path.abspath('.'))
 
 app = FastAPI()
 
-pytorch = torch.load('models/pytorch_beer_style.joblib')
+pytorch = torch.load('../models/pytorch_beer_style.joblib')
 
 @app.get("/")
 def read_root():
