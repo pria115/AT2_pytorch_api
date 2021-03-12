@@ -26,7 +26,7 @@ def format_features(brewery_name: str,	review_aroma: int, review_appearance: int
         'Aroma': [review_aroma],
         'Appearance': [review_appearance],
         'Palate': [review_palate],
-	'Taste": [review_taste]
+	'Taste': [review_taste]
     }
 
 
