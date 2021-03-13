@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from starlette.responses import JSONResponse
 from joblib import load
-
+import torch.nn as nn
 import torch
 import pandas as pd
 import os
