@@ -1,12 +1,27 @@
 from fastapi import FastAPI
 from starlette.responses import JSONResponse
 from joblib import load
-from src.models.pytorch import PytorchMultiClass
+
 import torch
 import pandas as pd
 import os
 import sys
 sys.path.append(os.path.abspath('.'))
+
+from src.models.pytorch import PytorchMultiClass
+
+class PytorchMultiClass(nn.Module):
+    def __init__(self, num_features):
+        super(PytorchMultiClass, self).__init__()
+        
+        self.layer_1 = nn.Linear(num_features, 32)
+        self.layer_out = nn.Linear(32, 104)
+        self.softmax = nn.Softmax(dim=1)
+
+    def forward(self, x):
+        x = F.dropout(F.relu(self.layer_1(x)), training=self.training)
+        x = self.layer_out(x)
+        return self.softmax(x)
 
 app = FastAPI()
 
