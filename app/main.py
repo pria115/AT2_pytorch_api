@@ -12,16 +12,16 @@ import sys
 sys.path.append(os.path.abspath('.'))
 
 
-pytorch = torch.load('../models/pytorch_beer.pt', encoding='ascii')
+pytorch = torch.load('../models/pytorch_beer1.pt', encoding='ascii')
 
 
 @app.get("/")
 def read_root():
-    return {"Hello": "BeerFans"}
+    return {"Beer": "'O Clock"}
 
 @app.get('/health', status_code=200)
 def healthcheck():
-    return 'Get ready to taste the best beer!!'
+    return 'Life is too short to drink bad beer!!'
 
 
 def format_features(brewery_name: str,	review_aroma: int, review_appearance: int, review_palate: int, review_taste: int):
@@ -34,7 +34,7 @@ def format_features(brewery_name: str,	review_aroma: int, review_appearance: int
     }
 
 
-@app.get("/mall/customers/segmentation")
+@app.get("/beer/style/segmentation")
 def predict(brewery_name: str,	review_aroma: int, review_appearance: int, review_palate: int, review_taste: int):
     features = format_features(brewery_name, review_aroma, review_appearance, review_palate, review_taste)
     obs = pd.DataFrame(features)
