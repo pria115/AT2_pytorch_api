@@ -4,13 +4,15 @@ from joblib import load
 import torch.nn as nn
 import torch
 import pandas as pd
-import os
-import sys
-sys.path.append(os.path.abspath('.'))
 
 app = FastAPI()
 
-pytorch = torch.load('../models/pytorch_beer_style.pt', encoding='ascii')
+def get_device():
+    if torch.cuda.is_available():
+        device = torch.device('cuda:0')
+    else:
+        device = torch.device('cpu') # don't have GPU 
+    return device
 
 class PytorchMultiClass(nn.Module):
     def __init__(self, num_features):
@@ -24,6 +26,13 @@ class PytorchMultiClass(nn.Module):
         x = F.dropout(F.relu(self.layer_1(x)), training=self.training)
         x = self.layer_out(x)
         return self.softmax(x)
+
+import os
+import sys
+sys.path.append(os.path.abspath('.'))
+
+pytorch = torch.load('../models/pytorch_beer_style.pt', encoding='ascii')
+
 
 @app.get("/")
 def read_root():
