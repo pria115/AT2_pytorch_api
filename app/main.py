@@ -8,8 +8,6 @@ import os
 import sys
 sys.path.append(os.path.abspath('.'))
 
-from src.models.pytorch import PytorchMultiClass
-
 class PytorchMultiClass(nn.Module):
     def __init__(self, num_features):
         super(PytorchMultiClass, self).__init__()
