@@ -14,7 +14,7 @@ import sys
 sys.path.append(os.path.abspath('.'))
 
 
-pytorch = torch.load('../models/pytorch_beer1.pt', encoding='ascii')
+pytorch = torch.load('../models/pytorch_beer.pt', encoding='ascii')
 
 
 @app.get("/")
@@ -39,7 +39,7 @@ def get_device():
     if torch.cuda.is_available():
         device = torch.device('cuda:0')
     else:
-        device = torch.device('cpu') # don't have GPU 
+        device = torch.device('cpu')  
     return device
 
 
@@ -63,5 +63,7 @@ def predict(brewery_name: str,	review_aroma: int, review_appearance: int, review
     df_tensor= torch.Tensor(np.array(obs)).to(device)
 
     output = pytorch(df_tensor)
+
+    pred = pytorch.predict(df_tensor)
 
     return JSONResponse(pred.tolist())
