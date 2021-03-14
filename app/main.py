@@ -4,9 +4,7 @@ from joblib import load
 import torch.nn as nn
 import torch
 import pandas as pd
-from pandas.core.common import maybe_box_datetimelike
-from sklearn.preprocessing import StandardScaler
-import category_encoders as ce
+
 
 app = FastAPI()
 
@@ -20,7 +18,7 @@ pytorch = torch.load('../models/pytorch_beer.pt', encoding='ascii')
 
 @app.get("/")
 def read_root():
-    return {"Beer": "'O Clock"}
+    return {"Beer": "O Clock"}
 
 @app.get('/health', status_code=200)
 def healthcheck():
@@ -35,13 +33,6 @@ def format_features(brewery_name: str,	review_aroma: int, review_appearance: int
         'Palate': [review_palate],
 	'Taste': [review_taste]
     }
-
-def get_device():
-    if torch.cuda.is_available():
-        device = torch.device('cuda:0')
-    else:
-        device = torch.device('cpu')  
-    return device
 
 
 @app.get("/beer/style/segmentation")
